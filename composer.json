@@ -1,0 +1,67 @@
+{
+    "name": "cblink/jddj-sdk",
+    "description": "Package description here.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "牟勇",
+            "email": "my242551325@gmail.com"
+        }
+    ],
+    "require": {
+        "mouyong/foundation-sdk": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cblink\\Jddj\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cblink\\Jddj\\Test\\": "tests"
+        }
+    },
+    "require-dev": {
+        "brainmaestro/composer-git-hooks": "^2.8",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "mockery/mockery": "^1.3",
+        "phpunit/phpunit": "^8.5"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [],
+            "providers": [
+                "Cblink\\Jddj\\LaravelServiceProvider"
+            ]
+        },
+        "hooks": {
+            "pre-commit": [
+                "composer test",
+                "composer fix-style"
+            ],
+            "pre-push": [
+                "composer test",
+                "composer check-style"
+            ]
+        }
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "sh vendor/bin/cghooks update"
+        ],
+        "post-merge": "composer install",
+        "post-install-cmd": [
+            "sh vendor/bin/cghooks add --ignore-lock",
+            "sh vendor/bin/cghooks update"
+        ],
+        "cghooks": "sh vendor/bin/cghooks",
+        "check-style": "sh vendor/bin/php-cs-fixer fix --using-cache=no --diff --config=.php_cs --dry-run --ansi",
+        "fix-style": "sh vendor/bin/php-cs-fixer fix --using-cache=no --config=.php_cs --ansi",
+        "test": "sh vendor/bin/phpunit --colors=always"
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests.",
+        "check-style": "Run style checks (only dry run - no fixing!).",
+        "fix-style": "Run style checks and fix violations."
+    }
+}
